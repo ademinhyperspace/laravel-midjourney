@@ -2,9 +2,6 @@
 
 namespace Arthmelikyan\Laramidjourney\DTO;
 
-use Arthmelikyan\Laramidjourney\Exceptions\MissingImageException;
-use Exception;
-
 class ImageResourceDTO
 {
     public string $prompt;
