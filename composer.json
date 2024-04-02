@@ -1,0 +1,33 @@
+{
+    "name": "arthmelikyan/laramidjourney",
+    "description": "laravel wrapper for midjourney API",
+    "autoload": {
+        "psr-4": {
+            "Arthmelikyan\\Laramidjourney\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arthmelikyan\\Laramidjourney\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ArthurMelikyan",
+            "email": "arthmelikyan@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Arthmelikyan\\Laramidjourney\\LaramidjourneyServiceProvider"
+            ],
+            "aliases": {
+                "Laramidjourney": "Arthmelikyan\\Laramidjourney\\Facades\\Laramidjourney"
+            }
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0"
+    }
+}
