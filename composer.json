@@ -1,6 +1,9 @@
 {
     "name": "arthmelikyan/laramidjourney",
     "description": "laravel wrapper for midjourney API",
+    "require": {
+        "php": "<=8.2"
+    },
     "autoload": {
         "psr-4": {
             "Arthmelikyan\\Laramidjourney\\": "src/"
