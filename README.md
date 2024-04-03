@@ -7,7 +7,7 @@ php artisan vendor:publish --tag=laramidjourney-config
 Then add your bearer token in .env file 
 
 ```
-MIDJOURNEY_API_TOKEN="you token"
+MIDJOURNEY_API_TOKEN="your token"
 ```
 
 # Usage
