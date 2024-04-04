@@ -5,11 +5,14 @@ namespace Arthmelikyan\Laramidjourney;
 use Arthmelikyan\Laramidjourney\Config\MidjourneyConfig;
 use Arthmelikyan\Laramidjourney\DTO\GenerateImageDTO;
 use Arthmelikyan\Laramidjourney\DTO\ImageResourceDTO;
+use Arthmelikyan\Laramidjourney\Exceptions\GenerateImageException;
 use Arthmelikyan\Laramidjourney\Exceptions\MissingApiTokenException;
+use Arthmelikyan\Laramidjourney\Exceptions\MissingImageException;
 use Arthmelikyan\Laramidjourney\Interfaces\LaraMidjourneyInterface;
 use Exception;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class LaraMidjourney implements LaraMidjourneyInterface
 {
@@ -26,37 +29,43 @@ class LaraMidjourney implements LaraMidjourneyInterface
         $this->httpClient = Http::withToken($this->config->getAuthToken())->throw();
     }
 
-    public function generateImage(string $prompt): GenerateImageDTO
+    /**
+     * @throws GenerateImageException
+     */
+    public function generateImage(string $prompt, string $externalImageUrl = ''): GenerateImageDTO
     {
-        $response = $this->httpClient
-            ->post($this->config->getEndpointUri('imagine'), [
-                "prompt" => $prompt
-            ])
-            ->json();
+        try {
+            $response = $this->httpClient
+                ->post($this->config->getEndpointUri('imagine'), [
+                    'prompt' => "$externalImageUrl $prompt",
+                ])
+                ->json();
+        } catch (Exception $ex) {
+            throw new GenerateImageException(
+                message: 'Could not generate image: '.$ex->getMessage(),
+                code: HttpResponse::HTTP_BAD_REQUEST
+            );
+        }
 
         return new GenerateImageDTO($response);
     }
 
     /**
-     * @throws Exception
+     * @throws MissingImageException
      */
     public function findGeneratedImage(string $messageId): ImageResourceDTO
     {
-        $response = $this->httpClient
-            ->get($this->config->getEndpointUri('message') . $messageId)
-            ->json();
+        try {
+            $response = $this->httpClient
+                ->get($this->config->getEndpointUri('message').$messageId)
+                ->json();
+        } catch (Exception $ex) {
+            throw new MissingImageException(
+                message: 'Image not found error: '.$ex->getMessage(),
+                code: HttpResponse::HTTP_NOT_FOUND
+            );
+        }
 
         return new ImageResourceDTO($response);
-    }
-
-    public function imageToImage(string $imageFullUrl, string $prompt): GenerateImageDTO
-    {
-        $response = $this->httpClient
-            ->post($this->config->getEndpointUri('imagine'), [
-                "prompt" => "$imageFullUrl $prompt"
-            ])
-            ->json();
-
-        return new GenerateImageDTO($response);
     }
 }

@@ -17,6 +17,12 @@ You can either use `LaraMidjourney` facade from `Arthmelikyan\Laramidjourney\Fac
 $midjourney = new LaraMidjourney();
 $midjourney->generateImage('draw a cat') // returns GenerateImageDTO object
 
-$midjourney->findGeneratedImage('29e09f05-6aa0-4749-8946-315d4fe8b8d3'); // returns ImageResourceDTO object
-$midjourney->imageToImage('https://i.imgur.com/jlFgGpe.jpeg', 'imagine these cats are js developers'); // returns GenerateImageDTO object
+$midjourney->findGeneratedImage('15df905d-11fc-46d5-8bc2-9d652506d1eb'); // returns ImageResourceDTO object
+
+```
+
+to use image to image functionality just call generateImage like this
+
+```php
+$midjourney->generateImage('imagine these cats are js developers', 'https://i.imgur.com/jlFgGpe.jpeg'); // returns GenerateImageDTO object
 ```

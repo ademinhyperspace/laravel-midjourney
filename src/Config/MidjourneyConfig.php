@@ -12,7 +12,7 @@ readonly class MidjourneyConfig
 
     public function getEndpointUri(string $segment): string
     {
-        return self::API_URI . str($segment)->start('/')->finish('/');
+        return self::API_URI.str($segment)->start('/')->finish('/');
     }
 
     /**
@@ -20,7 +20,7 @@ readonly class MidjourneyConfig
      */
     public function getAuthToken(): string
     {
-        if (!filled(config('laramidjourney.midjourney_api_token'))) {
+        if (! filled(config('laramidjourney.midjourney_api_token'))) {
             throw new MissingApiTokenException(
                 'Please Publish config file using and setup MIDJOURNEY_API_TOKEN inside your .env file.',
                 403

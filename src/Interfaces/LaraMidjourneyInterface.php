@@ -7,9 +7,7 @@ use Arthmelikyan\Laramidjourney\DTO\ImageResourceDTO;
 
 interface LaraMidjourneyInterface
 {
-    public function generateImage(string $prompt): GenerateImageDTO;
+    public function generateImage(string $prompt, string $externalImageUrl = ''): GenerateImageDTO;
 
     public function findGeneratedImage(string $messageId): ImageResourceDTO;
-
-    public function imageToImage(string $imageFullUrl, string $prompt): GenerateImageDTO;
 }
