@@ -1,5 +1,5 @@
 {
-    "name": "arthmelikyan/laramidjourney",
+    "name": "ademinhyperspace/laramidjourney",
     "description": "laravel wrapper for midjourney API",
     "require": {
         "php": ">=8.1"
